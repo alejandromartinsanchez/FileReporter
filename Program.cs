@@ -1,7 +1,7 @@
 ﻿namespace FileReporter
 
 /*
-  * Collect all files and folders for a given drive (First enumerate all drives and then ask the usuary about the drive he want to analyze)
+  * Collect all files and folders for a given drive (First enumerate all drives and then ask the user about the drive he want to analyze)
    * Analyze all folders, subfolders and files inside and collect:
     * File size
     * File extension*/
@@ -24,12 +24,12 @@
             {
                 Console.WriteLine("Choose the drive you want to analyze.");
                 choice = int.Parse(Console.ReadLine());
-
+                //TODO: Handle wrong text inputs, example "Hola".
 
             } while (choice > drives.Length || choice <= 0);
 
             DriveInfo selectedDrive = drives[choice - 1];
-            Console.WriteLine($"The drive you have selected is {selectedDrive}.");            
+            Console.WriteLine($"The drive you have selected is {selectedDrive}");            
         }
     }
 }
