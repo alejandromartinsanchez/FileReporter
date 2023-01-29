@@ -12,7 +12,20 @@ namespace FileReporter
     public static class Utilities
     {
         //We create the class "Utilities" to process some information of the directorys and archives.
-
+        public static PathStats GetPathFilesSize(string path)
+        {
+            long totalSize = 0;
+            int numberItems;
+            DirectoryInfo directory = new DirectoryInfo(path);
+            FileInfo[] files = directory.GetFiles();
+            numberItems= files.Length;
+            foreach (FileInfo file in files)
+            {
+                totalSize += file.Length;  
+            }
+            PathStats result = new PathStats(totalSize, numberItems);
+            return result;
+        }
         public static string ConvertFromBytes(long bytes)
 
         // The method "FormatBytes" will transform the information from bytes to kilobytes , megabytes and gigabytes.

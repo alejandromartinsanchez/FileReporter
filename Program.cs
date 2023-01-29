@@ -1,4 +1,6 @@
-﻿namespace FileReporter
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace FileReporter
 
 /*
   * Collect all files and folders for a given drive (First enumerate all drives and then ask the user about the drive he want to analyze)
@@ -6,7 +8,6 @@
     * File size
     * File extension*/
 {
-
     internal class Program
     {
         static void Main(string[] args)
@@ -31,21 +32,34 @@
             DriveInfo selectedDrive = drives[choice - 1];
             Console.WriteLine($"The drive you have selected is {selectedDrive}");
 
-            string archiveDirectory = @"C:\";
-            List<string> directories = Directory.EnumerateDirectories(archiveDirectory).ToList();
-            foreach (string itemD in directories)
-            {
-                Console.WriteLine(itemD);
-            }
-            Console.WriteLine();
-            List<string> archives = Directory.EnumerateFiles(archiveDirectory).ToList();
-            foreach (string itemA in archives)
-            {
-                Console.WriteLine(itemA);
-            }
-            
-  
-            
+            Dictionary<string, PathStats> pathList = new Dictionary<string, PathStats>();
+
+            PathStats mystats = Utilities.GetPathFilesSize(selectedDrive.Name);
+            long size = mystats.TotalSize;
+            int items = mystats.NumberItems;
+            string convertedSizes = Utilities.ConvertFromBytes(size);
+            Console.WriteLine($"{selectedDrive.Name}\t{convertedSizes}\t{items}");
+
+
+            //string archiveDirectory = selectedDrive.name;
+            //List<string> directories = Directory.EnumerateDirectories(archiveDirectory).ToList();
+            //foreach (string itemD in directories)
+            //{
+            //    Console.WriteLine(itemD);
+            //}
+            //Console.WriteLine();
+            //List<string> archives = Directory.EnumerateFiles(archiveDirectory).ToList();
+            //foreach (string itemA in archives)
+            //{
+            //    Console.WriteLine(itemA);
+            //}
+
+
+
+
+
+
+
         }
     }
 }
