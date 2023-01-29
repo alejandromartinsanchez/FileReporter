@@ -13,7 +13,7 @@ namespace FileReporter
     {
         //We create the class "Utilities" to process some information of the directorys and archives.
 
-        public static string FormatBytes(long bytes)
+        public static string ConvertFromBytes(long bytes)
 
         // The method "FormatBytes" will transform the information from bytes to kilobytes , megabytes and gigabytes.
         {          

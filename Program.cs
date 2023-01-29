@@ -17,7 +17,7 @@
             //Call GetDrives to list the available drives, then iterate the array to print in console as a number list adding the drive name and the drive size.
             for (int i = 0; i < drives.Length; i++)
             {
-                Console.WriteLine($"{i + 1}. {drives[i].Name} {Utilities.FormatBytes(drives[i].TotalSize)}");
+                Console.WriteLine($"{i + 1}. {drives[i].Name} {Utilities.ConvertFromBytes(drives[i].TotalSize)}");
             }
             int choice;
             do
@@ -29,7 +29,23 @@
             } while (choice > drives.Length || choice <= 0);
 
             DriveInfo selectedDrive = drives[choice - 1];
-            Console.WriteLine($"The drive you have selected is {selectedDrive}");            
+            Console.WriteLine($"The drive you have selected is {selectedDrive}");
+
+            string archiveDirectory = @"C:\";
+            List<string> directories = Directory.EnumerateDirectories(archiveDirectory).ToList();
+            foreach (string itemD in directories)
+            {
+                Console.WriteLine(itemD);
+            }
+            Console.WriteLine();
+            List<string> archives = Directory.EnumerateFiles(archiveDirectory).ToList();
+            foreach (string itemA in archives)
+            {
+                Console.WriteLine(itemA);
+            }
+            
+  
+            
         }
     }
 }
