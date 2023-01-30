@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,26 @@ namespace FileReporter
     public static class Utilities
     {
         //We create the class "Utilities" to process some information of the directorys and archives.
+
         public static PathStats GetPathFilesSize(string path)
         {
             long totalSize = 0;
             int numberItems;
             DirectoryInfo directory = new DirectoryInfo(path);
             FileInfo[] files = directory.GetFiles();
-            numberItems= files.Length;
+            DirectoryInfo[] subDirectories = directory.GetDirectories();
+            numberItems = files.Length;
             foreach (FileInfo file in files)
             {
                 totalSize += file.Length;  
             }
+            numberItems = subDirectories.Length;
+            foreach (DirectoryInfo subDirectory in subDirectories)
+            {
+                PathStats subDirectoryInfo = GetPathFilesSize(subDirectory.FullName);
+                totalSize += subDirectoryInfo.TotalSize;                
+            }
+
             PathStats result = new PathStats(totalSize, numberItems);
             return result;
         }

@@ -32,13 +32,13 @@ namespace FileReporter
             DriveInfo selectedDrive = drives[choice - 1];
             Console.WriteLine($"The drive you have selected is {selectedDrive}");
 
-            Dictionary<string, PathStats> pathList = new Dictionary<string, PathStats>();
-
             PathStats mystats = Utilities.GetPathFilesSize(selectedDrive.Name);
             long size = mystats.TotalSize;
             int items = mystats.NumberItems;
             string convertedSizes = Utilities.ConvertFromBytes(size);
-            Console.WriteLine($"{selectedDrive.Name}\t{convertedSizes}\t{items}");
+            Console.WriteLine($"{selectedDrive.Name}\t\t\t\t\t\t{convertedSizes}\t{items}");
+
+
 
 
             //string archiveDirectory = selectedDrive.name;
