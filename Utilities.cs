@@ -26,6 +26,7 @@ namespace FileReporter
         {
             DirectoryInformation currentDirectoryInformation = GetFileInfo(path);
             Drive.Add(currentDirectoryInformation.Path, currentDirectoryInformation.Stats);
+            GetDirectoryInfo(path);
             return Sucess;
         }
         public static DirectoryInformation GetFileInfo(string path)
@@ -46,7 +47,7 @@ namespace FileReporter
             return result;
         }
 
-        public static void GetDirectoryInformation(string path)
+        public static void GetDirectoryInfo(string path)
         {
             DirectoryInfo directory = new DirectoryInfo(path);
             DirectoryInfo[] subDirectories = directory.GetDirectories();
