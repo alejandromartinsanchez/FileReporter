@@ -15,13 +15,29 @@ namespace FileReporter
     {
         public static long GlobalTotalSize { get; set; }
         public static int GlobalNumberItems { get; set; }
+
+        public static Dictionary<string, PathStats> Drive = new Dictionary<string, PathStats>();
         
-        public static PathStats GetDirectoryInfo(string path)
+        public static int GetDriveInfo(string path)
         {
+
+        }
+        public static DriveInformation GetDirectoryInfo(string path)
+        {
+            long currentPathSize = 0;
+            int currentPathItems = 0;
             DirectoryInfo directory = new DirectoryInfo(path);
             FileInfo[] files = directory.GetFiles();
-            PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
-            return (result);
+            foreach (FileInfo file in files)
+                {
+                    //GlobalTotalSize += file.Length;
+                    //GlobalNumberItems++;
+                    currentPathSize += file.Length;
+                    currentPathItems++;
+                }
+            PathStats pathStats = new PathStats(currentPathSize, currentPathItems);
+            DriveInformation result = new DriveInformation(path, pathStats);
+            return result;
         }
         //public static PathStats GetDirectoryInfo(string path)
         //{
