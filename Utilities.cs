@@ -10,41 +10,49 @@ using System.Threading.Tasks;
 
 namespace FileReporter
 {
+    //We create the class "Utilities" to process some information of the directorys and archives.
     public static class Utilities
     {
         public static long GlobalTotalSize { get; set; }
         public static int GlobalNumberItems { get; set; }
-        //We create the class "Utilities" to process some information of the directorys and archives.
+        
         public static PathStats GetDirectoryInfo(string path)
         {
-
-            try
-            {
-                DirectoryInfo directory = new DirectoryInfo(path);
-                FileInfo[] files = directory.GetFiles();
-                DirectoryInfo[] subDirectories = directory.GetDirectories();
-
-                //Add the size of the files in the directory.
-                foreach (FileInfo file in files)
-                {
-                    GlobalTotalSize += file.Length;
-                    GlobalNumberItems++;
-                }
-                
-                //Add the number of items and the subdirectories and add its total size.
-                foreach (DirectoryInfo subDirectory in subDirectories)
-                {
-                    PathStats subDirectoryInfo = GetDirectoryInfo(subDirectory.FullName);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error getting directory information: {ex.Message}");
-            }
-
+            DirectoryInfo directory = new DirectoryInfo(path);
+            FileInfo[] files = directory.GetFiles();
             PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
-            return result;
+            return (result);
         }
+        //public static PathStats GetDirectoryInfo(string path)
+        //{
+
+        //    try
+        //    {
+        //        DirectoryInfo directory = new DirectoryInfo(path);
+        //        FileInfo[] files = directory.GetFiles();
+        //        DirectoryInfo[] subDirectories = directory.GetDirectories();
+
+        //        //Add the size of the files in the directory.
+        //        foreach (FileInfo file in files)
+        //        {
+        //            GlobalTotalSize += file.Length;
+        //            GlobalNumberItems++;
+        //        }
+
+        //        //Add the number of items and the subdirectories and add its total size.
+        //        foreach (DirectoryInfo subDirectory in subDirectories)
+        //        {
+        //            PathStats subDirectoryInfo = GetDirectoryInfo(subDirectory.FullName);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error getting directory information: {ex.Message}");
+        //    }
+
+        //    PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
+        //    return result;
+        //}
 
         //Create a method to analyze the path, total size and number of items of a file (GetFileInfo).
         public static PathStats GetFileInfo(string path)
