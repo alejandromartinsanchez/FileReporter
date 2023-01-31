@@ -34,14 +34,21 @@ namespace FileReporter
             long currentPathSize = 0;
             int currentPathItems = 0;
             DirectoryInfo directory = new DirectoryInfo(path);
-            FileInfo[] files = directory.GetFiles();
-            foreach (FileInfo file in files)
+
+            try
+            {
+                FileInfo[] files = directory.GetFiles();
+                foreach (FileInfo file in files)
                 {
-                    //GlobalTotalSize += file.Length;
-                    //GlobalNumberItems++;
                     currentPathSize += file.Length;
                     currentPathItems++;
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}\t{path}");                
+            }
+
             PathStats pathStats = new PathStats(currentPathSize, currentPathItems);
             DirectoryInformation result = new DirectoryInformation(path, pathStats);
             return result;
@@ -50,11 +57,20 @@ namespace FileReporter
         public static void GetDirectoryInfo(string path)
         {
             DirectoryInfo directory = new DirectoryInfo(path);
-            DirectoryInfo[] subDirectories = directory.GetDirectories();
+            try
+            {
+                DirectoryInfo[] subDirectories = directory.GetDirectories();
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
-                    DirectoryInformation currentDirectoryInformation = GetFileInfo(path);
-                }      
+                    DirectoryInformation currentDirectoryInformation = GetFileInfo(subDirectory.FullName);
+                    Drive.Add(currentDirectoryInformation.Path, currentDirectoryInformation.Stats);
+                    GetDirectoryInfo(subDirectory.FullName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}\t{path}");                
+            }
         }
         //public static PathStats GetDirectoryInfo(string path)
         //{
