@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.IO;
 
 namespace FileReporter
 
@@ -32,7 +32,7 @@ namespace FileReporter
             DriveInfo selectedDrive = drives[choice - 1];
             Console.WriteLine($"The drive you have selected is {selectedDrive}");
 
-            PathStats mystats = Utilities.GetPathFilesSize(selectedDrive.Name);
+            PathStats mystats = Utilities.GetDirectoryInfo(selectedDrive.Name);
             long size = mystats.TotalSize;
             int items = mystats.NumberItems;
             string convertedSizes = Utilities.ConvertFromBytes(size);

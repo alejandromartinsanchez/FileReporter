@@ -12,30 +12,58 @@ namespace FileReporter
 {
     public static class Utilities
     {
+        public static long GlobalTotalSize { get; set; }
+        public static int GlobalNumberItems { get; set; }
         //We create the class "Utilities" to process some information of the directorys and archives.
-
-        public static PathStats GetPathFilesSize(string path)
+        public static PathStats GetDirectoryInfo(string path)
         {
-            long totalSize = 0;
-            int numberItems;
-            DirectoryInfo directory = new DirectoryInfo(path);
-            FileInfo[] files = directory.GetFiles();
-            DirectoryInfo[] subDirectories = directory.GetDirectories();
-            numberItems = files.Length;
-            foreach (FileInfo file in files)
+
+            try
             {
-                totalSize += file.Length;  
+                DirectoryInfo directory = new DirectoryInfo(path);
+                FileInfo[] files = directory.GetFiles();
+                DirectoryInfo[] subDirectories = directory.GetDirectories();
+
+                //Add the size of the files in the directory.
+                foreach (FileInfo file in files)
+                {
+                    GlobalTotalSize += file.Length;
+                    GlobalNumberItems++;
+                }
+                
+                //Add the number of items and the subdirectories and add its total size.
+                foreach (DirectoryInfo subDirectory in subDirectories)
+                {
+                    PathStats subDirectoryInfo = GetDirectoryInfo(subDirectory.FullName);
+                }
             }
-            numberItems = subDirectories.Length;
-            foreach (DirectoryInfo subDirectory in subDirectories)
+            catch (Exception ex)
             {
-                PathStats subDirectoryInfo = GetPathFilesSize(subDirectory.FullName);
-                totalSize += subDirectoryInfo.TotalSize;                
+                Console.WriteLine($"Error getting directory information: {ex.Message}");
             }
 
-            PathStats result = new PathStats(totalSize, numberItems);
+            PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
             return result;
         }
+
+        //Create a method to analyze the path, total size and number of items of a file (GetFileInfo).
+        public static PathStats GetFileInfo(string path)
+        {
+            DirectoryInfo directory = new DirectoryInfo(path);
+            FileInfo[] files = directory.GetFiles();
+
+            foreach (FileInfo file in files)
+            {
+                GlobalTotalSize += file.Length;
+                GlobalNumberItems++;
+            }
+
+            PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
+            return result;
+        }
+        //Create a method to analyze the path, total size and number of items of a directory (GetDirectoryInfo).
+        //Create a method to fill a dictionary with the info of GetFileInfo and GetDirectoryInfo.
+
         public static string ConvertFromBytes(long bytes)
 
         // The method "FormatBytes" will transform the information from bytes to kilobytes , megabytes and gigabytes.
