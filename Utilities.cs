@@ -16,13 +16,19 @@ namespace FileReporter
         public static long GlobalTotalSize { get; set; }
         public static int GlobalNumberItems { get; set; }
 
+        public const int Sucess = 0;
+        public const int Error = 1;
+        public const int Warning = 2;
+
         public static Dictionary<string, PathStats> Drive = new Dictionary<string, PathStats>();
         
         public static int GetDriveInfo(string path)
         {
-
+            DirectoryInformation currentDirectoryInformation = GetFileInfo(path);
+            Drive.Add(currentDirectoryInformation.Path, currentDirectoryInformation.Stats);
+            return Sucess;
         }
-        public static DriveInformation GetDirectoryInfo(string path)
+        public static DirectoryInformation GetFileInfo(string path)
         {
             long currentPathSize = 0;
             int currentPathItems = 0;
@@ -36,8 +42,18 @@ namespace FileReporter
                     currentPathItems++;
                 }
             PathStats pathStats = new PathStats(currentPathSize, currentPathItems);
-            DriveInformation result = new DriveInformation(path, pathStats);
+            DirectoryInformation result = new DirectoryInformation(path, pathStats);
             return result;
+        }
+
+        public static void GetDirectoryInformation(string path)
+        {
+            DirectoryInfo directory = new DirectoryInfo(path);
+            DirectoryInfo[] subDirectories = directory.GetDirectories();
+                foreach (DirectoryInfo subDirectory in subDirectories)
+                {
+                    DirectoryInformation currentDirectoryInformation = GetFileInfo(path);
+                }      
         }
         //public static PathStats GetDirectoryInfo(string path)
         //{
@@ -69,25 +85,6 @@ namespace FileReporter
         //    PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
         //    return result;
         //}
-
-        //Create a method to analyze the path, total size and number of items of a file (GetFileInfo).
-        public static PathStats GetFileInfo(string path)
-        {
-            DirectoryInfo directory = new DirectoryInfo(path);
-            FileInfo[] files = directory.GetFiles();
-
-            foreach (FileInfo file in files)
-            {
-                GlobalTotalSize += file.Length;
-                GlobalNumberItems++;
-            }
-
-            PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
-            return result;
-        }
-        //Create a method to analyze the path, total size and number of items of a directory (GetDirectoryInfo).
-        //Create a method to fill a dictionary with the info of GetFileInfo and GetDirectoryInfo.
-
         public static string ConvertFromBytes(long bytes)
 
         // The method "FormatBytes" will transform the information from bytes to kilobytes , megabytes and gigabytes.
