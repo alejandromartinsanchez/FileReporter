@@ -8,7 +8,7 @@ namespace FileReporter
     {
         static void Main(string[] args)
         {
-           
+
 
             Console.WriteLine("List of all drives:");
             DriveInfo[] drives = DriveInfo.GetDrives();
@@ -31,6 +31,13 @@ namespace FileReporter
             Console.WriteLine($"The drive you have selected is {selectedDrive}");
 
             int result = Utilities.GetDriveInfo(selectedDrive.Name);
+
+            //Print dicctionary:
+            //foreach (var drive in Utilities.Drive)
+            //{
+            //    Console.WriteLine($"{drive.Key}\t{drive.Value}");
+            //}
+
 
             foreach (var item in Utilities.Drive)
             {

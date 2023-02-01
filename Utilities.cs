@@ -52,6 +52,7 @@ namespace FileReporter
 
             PathStats pathStats = new PathStats(currentPathSize, currentPathItems);
             DirectoryInformation result = new DirectoryInformation(path, pathStats);
+
             return result;
         }
 

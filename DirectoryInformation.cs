@@ -16,5 +16,9 @@ namespace FileReporter
             this.Path = path;
             this.Stats = stats;
         }
+        public override string ToString()
+        {
+            return Path + " " + Stats.TotalSize.ToString() + " " + Stats.NumberItems.ToString();
+        }
     }
 }

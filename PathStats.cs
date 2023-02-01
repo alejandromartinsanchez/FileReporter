@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileReporter
 {
-       public class PathStats 
+    public class PathStats
     {
         public long TotalSize { get; set; }
         public int NumberItems { get; set; }
@@ -15,6 +15,10 @@ namespace FileReporter
         {
             this.TotalSize = totalSize;
             this.NumberItems = numberItems;
+        }
+        public override string ToString()
+        {
+            return TotalSize.ToString() + "\t" + NumberItems.ToString();
         }
     }
 }
