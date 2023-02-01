@@ -72,39 +72,11 @@ namespace FileReporter
                 Console.WriteLine($"{ex.Message}\t{path}");                
             }
         }
-        //public static PathStats GetDirectoryInfo(string path)
-        //{
-
-        //    try
-        //    {
-        //        DirectoryInfo directory = new DirectoryInfo(path);
-        //        FileInfo[] files = directory.GetFiles();
-        //        DirectoryInfo[] subDirectories = directory.GetDirectories();
-
-        //        //Add the size of the files in the directory.
-        //        foreach (FileInfo file in files)
-        //        {
-        //            GlobalTotalSize += file.Length;
-        //            GlobalNumberItems++;
-        //        }
-
-        //        //Add the number of items and the subdirectories and add its total size.
-        //        foreach (DirectoryInfo subDirectory in subDirectories)
-        //        {
-        //            PathStats subDirectoryInfo = GetDirectoryInfo(subDirectory.FullName);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Error getting directory information: {ex.Message}");
-        //    }
-
-        //    PathStats result = new PathStats(GlobalTotalSize, GlobalNumberItems);
-        //    return result;
-        //}
-        public static string ConvertFromBytes(long bytes)
 
         // The method "FormatBytes" will transform the information from bytes to kilobytes , megabytes and gigabytes.
+        public static string ConvertFromBytes(long bytes)
+
+
         {          
             long gigabytes = 0;
             string suffix;

@@ -2,20 +2,18 @@
 
 namespace FileReporter
 
-/*
-  * Collect all files and folders for a given drive (First enumerate all drives and then ask the user about the drive he want to analyze)
-   * Analyze all folders, subfolders and files inside and collect:
-    * File size
-    * File extension*/
+
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+           
 
             Console.WriteLine("List of all drives:");
             DriveInfo[] drives = DriveInfo.GetDrives();
-            //Call GetDrives to list the available drives, then iterate the array to print in console as a number list adding the drive name and the drive size.
+            /*Call GetDrives to list the available drives, then iterate the array to print 
+              in console as a number list adding the drive name and the drive size.*/
             for (int i = 0; i < drives.Length; i++)
             {
                 Console.WriteLine($"{i + 1}. {drives[i].Name} {Utilities.ConvertFromBytes(drives[i].TotalSize)}");
@@ -23,7 +21,7 @@ namespace FileReporter
             int choice;
             do
             {
-                Console.WriteLine("Choose the drive you want to analyze.");
+                Console.WriteLine("\nChoose the drive you want to analyze.\n");
                 choice = int.Parse(Console.ReadLine());
                 //TODO: Handle wrong text inputs, example "Hola".
 
@@ -34,27 +32,32 @@ namespace FileReporter
 
             int result = Utilities.GetDriveInfo(selectedDrive.Name);
 
-            //PathStats mystats = Utilities.GetDirectoryInfo(selectedDrive.Name);
-            //long size = mystats.TotalSize;
-            //int items = mystats.NumberItems;
-            //string convertedSizes = Utilities.ConvertFromBytes(size);
-            //Console.WriteLine($"{selectedDrive.Name}\t\t\t\t\t\t{convertedSizes}\t{items}");
+            //We need to create a new diccionary to compare it with Utilities.Drive?
 
+            foreach (var item in Utilities.Drive)
+            {
+                string[] fragmentPaths = item.Key.Split(@"\");
+                string currentPath = "";
+                foreach (string fragmentPath in fragmentPaths) 
+                {
+                    currentPath += fragmentPath + @"\";
+                    if (Utilities.Drive.ContainsKey(currentPath))
+                    {
+                        //Take the current stats value and add the ones from the path being analyzed
+                    }
+                    else
+                    {
+                        //Create it in the new diccionary
+                    }
+                }
+                
+            }
+            
+            // How to access a dictionary by the key DictionaryName["key"]
+            //Utilities.Drive.ContainsKey("E:\\");
 
-
-
-            //string archiveDirectory = selectedDrive.name;
-            //List<string> directories = Directory.EnumerateDirectories(archiveDirectory).ToList();
-            //foreach (string itemD in directories)
-            //{
-            //    Console.WriteLine(itemD);
-            //}
-            //Console.WriteLine();
-            //List<string> archives = Directory.EnumerateFiles(archiveDirectory).ToList();
-            //foreach (string itemA in archives)
-            //{
-            //    Console.WriteLine(itemA);
-            //}
+            // Split
+            //  var aaa = @"a\asdasdwfwef\sdffweftwwg\weggwsaff\efwfsdfsdfsefwse\".Split(@"\");
 
 
 
