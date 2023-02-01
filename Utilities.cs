@@ -21,7 +21,8 @@ namespace FileReporter
         public const int Warning = 2;
 
         public static Dictionary<string, PathStats> Drive = new Dictionary<string, PathStats>();
-        
+        public static Dictionary<string, PathStats> AggregatedDrive = new Dictionary<string, PathStats>();
+
         public static int GetDriveInfo(string path)
         {
             DirectoryInformation currentDirectoryInformation = GetFileInfo(path);

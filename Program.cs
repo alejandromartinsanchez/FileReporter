@@ -32,21 +32,27 @@ namespace FileReporter
 
             int result = Utilities.GetDriveInfo(selectedDrive.Name);
 
-            //We need to create a new diccionary to compare it with Utilities.Drive?
-
             foreach (var item in Utilities.Drive)
             {
                 string[] fragmentPaths = item.Key.Split(@"\");
-                string currentPath = "";
+                //fragmentPaths = fragmentPaths.Where(x => !string.IsNullOrEmpty(x)).ToArray(); (delete the void array items, test)
+                string currentPath = "";                
                 foreach (string fragmentPath in fragmentPaths) 
                 {
-                    currentPath += fragmentPath + @"\";
-                    if (Utilities.Drive.ContainsKey(currentPath))
+                    currentPath = currentPath + fragmentPath + @"\";
+                    if (Utilities.AggregatedDrive.ContainsKey(currentPath))
                     {
+                        long tsCurrentPath = 0;
+                        int niCurrentPath = 0;
+                        tsCurrentPath = Utilities.AggregatedDrive[currentPath].TotalSize;
+                        niCurrentPath = Utilities.AggregatedDrive[currentPath].NumberItems;
+                        
                         //Take the current stats value and add the ones from the path being analyzed
                     }
                     else
                     {
+
+                         Utilities.AggregatedDrive.Add(currentPath, item.Value); 
                         //Create it in the new diccionary
                     }
                 }
