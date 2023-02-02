@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FileReporter
 
@@ -19,14 +20,17 @@ namespace FileReporter
                 Console.WriteLine($"{i + 1}. {drives[i].Name} {Utilities.ConvertFromBytes(drives[i].TotalSize)}");
             }
             int choice;
+            bool success = false;
             do
             {
                 Console.WriteLine("\nChoose the drive you want to analyze.\n");
-                //choice = int.Parse(Console.ReadLine());
-                choice = 3;
-                //TODO: Handle wrong text inputs, example "Hola".
-
-            } while (choice > drives.Length || choice <= 0);
+                
+                success = int.TryParse(Console.ReadLine(), out choice);
+                if (choice > drives.Length || choice <= 0 || !success)
+                {
+                    Console.WriteLine("Invalid entry. Try again.");
+                }
+            } while (choice > drives.Length || choice <= 0 || !success);
 
             DriveInfo selectedDrive = drives[choice - 1];
             Console.WriteLine($"The drive you have selected is {selectedDrive}");
