@@ -41,29 +41,16 @@ namespace FileReporter
 
             foreach (var item in Utilities.Drive)
             {
-                string[] fragmentPaths = item.Key.Split(@"\");
-                //fragmentPaths = fragmentPaths.Where(x => !string.IsNullOrEmpty(x)).ToArray(); (delete the void array items, test)
-                string currentPath = "";                
-                foreach (string fragmentPath in fragmentPaths) 
+                Console.WriteLine("--------------");
+                string path = item.Key;
+                string[] fragments = path.Split(@"\");
+                string currentFragment = "";
+                foreach (string fragment in fragments)
                 {
-                    currentPath = currentPath + fragmentPath + @"\";
-                    if (Utilities.AggregatedDrive.ContainsKey(currentPath))
-                    {
-                        long tsCurrentPath = 0;
-                        int niCurrentPath = 0;
-                        tsCurrentPath = Utilities.AggregatedDrive[currentPath].TotalSize;
-                        niCurrentPath = Utilities.AggregatedDrive[currentPath].NumberItems;
-                        
-                        //Take the current stats value and add the ones from the path being analyzed
-                    }
-                    else
-                    {
-
-                         Utilities.AggregatedDrive.Add(currentPath, item.Value); 
-                        //Create it in the new diccionary
-                    }
+                    currentFragment = currentFragment + fragment + @"\";
+                    Console.WriteLine(currentFragment);
                 }
-                
+
             }
             
             // How to access a dictionary by the key DictionaryName["key"]

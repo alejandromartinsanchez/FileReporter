@@ -26,7 +26,8 @@ namespace FileReporter
         public static int GetDriveInfo(string path)
         {
             DirectoryInformation currentDirectoryInformation = GetFileInfo(path);
-            Drive.Add(currentDirectoryInformation.Path, currentDirectoryInformation.Stats);
+            string drivePathWithoutSlash = currentDirectoryInformation.Path.Substring(0, currentDirectoryInformation.Path.Length - 1); 
+            Drive.Add(drivePathWithoutSlash, currentDirectoryInformation.Stats);
             GetDirectoryInfo(path);
             return Sucess;
         }
