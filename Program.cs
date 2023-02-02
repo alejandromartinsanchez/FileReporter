@@ -49,6 +49,16 @@ namespace FileReporter
                 {
                     currentFragment = currentFragment + fragment + @"\";
                     Console.WriteLine(currentFragment);
+                    if (Utilities.AggregatedDrive.ContainsKey(currentFragment))
+                    {
+                        Utilities.AggregatedDrive[currentFragment].TotalSize += item.Value.TotalSize;
+                        Utilities.AggregatedDrive[currentFragment].NumberItems += item.Value.NumberItems;
+                    }
+                    else
+                    {
+                        Utilities.AggregatedDrive.Add(item.Key, item.Value);
+
+                    }
                 }
 
             }
