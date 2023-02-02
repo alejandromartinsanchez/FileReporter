@@ -22,7 +22,8 @@ namespace FileReporter
             do
             {
                 Console.WriteLine("\nChoose the drive you want to analyze.\n");
-                choice = int.Parse(Console.ReadLine());
+                //choice = int.Parse(Console.ReadLine());
+                choice = 3;
                 //TODO: Handle wrong text inputs, example "Hola".
 
             } while (choice > drives.Length || choice <= 0);
@@ -39,7 +40,7 @@ namespace FileReporter
             //}
 
 
-            foreach (var item in Utilities.Drive)
+            foreach (var item in Utilities.Drives)
             {
                 Console.WriteLine("--------------");
                 string path = item.Key;
@@ -49,14 +50,14 @@ namespace FileReporter
                 {
                     currentFragment = currentFragment + fragment + @"\";
                     Console.WriteLine(currentFragment);
-                    if (Utilities.AggregatedDrive.ContainsKey(currentFragment))
+                    if (Utilities.AggregatedDrives.ContainsKey(currentFragment))
                     {
-                        Utilities.AggregatedDrive[currentFragment].TotalSize += item.Value.TotalSize;
-                        Utilities.AggregatedDrive[currentFragment].NumberItems += item.Value.NumberItems;
+                        Utilities.AggregatedDrives[currentFragment].TotalSize += item.Value.TotalSize;
+                        Utilities.AggregatedDrives[currentFragment].NumberItems += item.Value.NumberItems;
                     }
                     else
                     {
-                        Utilities.AggregatedDrive.Add(item.Key, item.Value);
+                        Utilities.AggregatedDrives.Add(currentFragment, item.Value);
 
                     }
                 }

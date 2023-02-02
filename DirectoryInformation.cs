@@ -9,9 +9,9 @@ namespace FileReporter
     public class DirectoryInformation
     {
         public string Path { get; set; }
-        public PathStats Stats { get; set; }
+        public Stats Stats { get; set; }
 
-        public DirectoryInformation(string path, PathStats stats)
+        public DirectoryInformation(string path, Stats stats)
         {
             this.Path = path;
             this.Stats = stats;

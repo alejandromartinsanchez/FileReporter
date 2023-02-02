@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FileReporter
 {
-    public class PathStats
+    public class Stats
     {
         public long TotalSize { get; set; }
         public int NumberItems { get; set; }
 
-        public PathStats(long totalSize, int numberItems)
+        public Stats(long totalSize, int numberItems)
         {
             this.TotalSize = totalSize;
             this.NumberItems = numberItems;

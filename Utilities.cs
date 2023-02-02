@@ -20,28 +20,40 @@ namespace FileReporter
         public const int Error = 1;
         public const int Warning = 2;
 
-        public static Dictionary<string, PathStats> Drive = new Dictionary<string, PathStats>();
-        public static Dictionary<string, PathStats> AggregatedDrive = new Dictionary<string, PathStats>();
+        public static Dictionary<string, Stats> Drives = new Dictionary<string, Stats>();
+        public static Dictionary<string, Stats> AggregatedDrives = new Dictionary<string, Stats>();
+        public static Dictionary<string, Stats> Formats = new Dictionary<string, Stats>();
 
         public static int GetDriveInfo(string path)
         {
-            DirectoryInformation currentDirectoryInformation = GetFileInfo(path);
+            DirectoryInformation currentDirectoryInformation = GetFilesInfo(path);
             string drivePathWithoutSlash = currentDirectoryInformation.Path.Substring(0, currentDirectoryInformation.Path.Length - 1); 
-            Drive.Add(drivePathWithoutSlash, currentDirectoryInformation.Stats);
+            Drives.Add(drivePathWithoutSlash, currentDirectoryInformation.Stats);
             GetDirectoryInfo(path);
             return Sucess;
         }
-        public static DirectoryInformation GetFileInfo(string path)
+        public static DirectoryInformation GetFilesInfo(string path)
         {
             long currentPathSize = 0;
-            int currentPathItems = 0;
+            int currentPathItems = 0;            
             DirectoryInfo directory = new DirectoryInfo(path);
 
             try
             {
-                FileInfo[] files = directory.GetFiles();
+                FileInfo[] files = directory.GetFiles();                
                 foreach (FileInfo file in files)
                 {
+                    Stats extensionValue = new Stats(file.Length, 1);
+                    if (Formats.ContainsKey(file.Extension))
+                    {
+                        Formats[file.Extension].TotalSize += extensionValue.TotalSize;
+                        Formats[file.Extension].NumberItems++;
+                    
+                    }  
+                    else 
+                    {
+                        Formats.Add(file.Extension, extensionValue);
+                    }
                     currentPathSize += file.Length;
                     currentPathItems++;
                 }
@@ -51,7 +63,7 @@ namespace FileReporter
                 Console.WriteLine($"{ex.Message}\t{path}");                
             }
 
-            PathStats pathStats = new PathStats(currentPathSize, currentPathItems);
+            Stats pathStats = new Stats(currentPathSize, currentPathItems);
             DirectoryInformation result = new DirectoryInformation(path, pathStats);
 
             return result;
@@ -65,8 +77,8 @@ namespace FileReporter
                 DirectoryInfo[] subDirectories = directory.GetDirectories();
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
-                    DirectoryInformation currentDirectoryInformation = GetFileInfo(subDirectory.FullName);
-                    Drive.Add(currentDirectoryInformation.Path, currentDirectoryInformation.Stats);
+                    DirectoryInformation currentDirectoryInformation = GetFilesInfo(subDirectory.FullName);
+                    Drives.Add(currentDirectoryInformation.Path, currentDirectoryInformation.Stats);
                     GetDirectoryInfo(subDirectory.FullName);
                 }
             }
