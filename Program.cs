@@ -6,7 +6,7 @@ namespace FileReporter
 
 {
     internal class Program
-    {
+    {        
         static void Main(string[] args)
         {
 
@@ -32,7 +32,7 @@ namespace FileReporter
                 }
             } while (choice > drives.Length || choice <= 0 || !success);
 
-            DriveInfo selectedDrive = drives[choice - 1];
+            DriveInfo selectedDrive = drives[choice - 1];            
             Console.WriteLine($"The drive you have selected is {selectedDrive}");
 
             int result = Utilities.GetDriveInfo(selectedDrive.Name);
@@ -65,6 +65,8 @@ namespace FileReporter
 
                     }
                 }
+                Utilities.selectedDrivetxt = selectedDrive.Name.Substring(0,(selectedDrive.Name.Length - 2));
+                Utilities.Txt();
 
             }
             

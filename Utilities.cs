@@ -20,10 +20,11 @@ namespace FileReporter
         public const int Error = 1;
         public const int Warning = 2;
 
+        public static string selectedDrivetxt;
+
         public static Dictionary<string, Stats> Drives = new Dictionary<string, Stats>();
         public static Dictionary<string, Stats> AggregatedDrives = new Dictionary<string, Stats>();
         public static Dictionary<string, Stats> Formats = new Dictionary<string, Stats>();
-
         public static int GetDriveInfo(string path)
         {
             DirectoryInformation currentDirectoryInformation = GetFilesInfo(path);
@@ -121,6 +122,23 @@ namespace FileReporter
             }
             //Then we ask the method to return the value plus the suffix
             return gigabytes.ToString() + suffix;
+        }
+
+        public static void Txt()
+        {
+            string filePath = $"FileReport{selectedDrivetxt}.txt";
+            WriteToFile(filePath);
+        }
+        static void WriteToFile (string filePath)
+        {
+            //Write to the file
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                foreach (var items in Utilities.AggregatedDrives)
+                {
+                    sw.WriteLine($"{items.Key}\t{Utilities.ConvertFromBytes(items.Value.TotalSize)}\t{items.Value.NumberItems}");
+                }
+            }
         }
     }
 }
