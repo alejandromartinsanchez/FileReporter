@@ -126,7 +126,7 @@ namespace FileReporter
 
         public static void Txt()
         {
-            string filePath = $"FileReport{selectedDrivetxt}.txt";
+            string filePath = $"FileReport{selectedDrivetxt}.tsv";
             WriteToFile(filePath);
         }
         static void WriteToFile (string filePath)
