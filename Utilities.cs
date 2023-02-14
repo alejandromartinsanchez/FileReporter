@@ -134,6 +134,7 @@ namespace FileReporter
             //Write to the file
             using (StreamWriter sw = new StreamWriter(filePath))
             {
+                sw.WriteLine("Path\tTotalSize\tNumberItems");
                 foreach (var items in Utilities.AggregatedDrives)
                 {
                     sw.WriteLine($"{items.Key}\t{Utilities.ConvertFromBytes(items.Value.TotalSize)}\t{items.Value.NumberItems}");

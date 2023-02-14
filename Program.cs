@@ -65,7 +65,7 @@ namespace FileReporter
 
                     }
                 }
-                Utilities.selectedDrivetxt = selectedDrive.Name.Substring(0,(selectedDrive.Name.Length - 2));
+                Utilities.selectedDrivetxt = selectedDrive.Name.Substring(0,selectedDrive.Name.Length - 2);
                 Utilities.Txt();
 
             }
